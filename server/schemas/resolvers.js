@@ -9,9 +9,22 @@ const resolvers = {
         const userData = await User.findOne({ _id: context.user._id }).select(
           "-__v -password"
         );
+
         return userData;
       }
+
       throw new AuthenticationError("Not logged in");
+    },
+  },
+
+  Mutation: {
+    // Creates a single user and creates a jwt token for that user
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+
+      const token = signToken(user);
+
+      return { token, user };
     },
   },
 };
