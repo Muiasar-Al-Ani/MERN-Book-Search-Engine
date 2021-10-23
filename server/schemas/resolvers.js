@@ -4,7 +4,9 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
+    // By adding context to our query, we can retrieve the logged in user without specifically searching for them
     singleUser: async (parent, args, context) => {
+      // If context has a `user` property, that means the user executing this query has a valid JWT and is logged in
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id }).select(
           "-__v -password"
@@ -52,6 +54,23 @@ const resolvers = {
       const token = signToken(user);
 
       return { token, user };
+    },
+
+    // By adding context to our query, we can retrieve the logged in user without specifically searching for them
+    saveBook: async (parent, { book }, context) => {
+      // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
+      if (context.user) {
+        const updatedUser = await User.findOneAndUpdate(
+          { _id: context.user._id },
+          // Pushes a book to an array of books associated with this user
+          { $addToSet: { savedBooks: book } },
+          { new: true }
+        );
+        return updatedUser;
+      }
+
+      // If user attempts to execute this mutation and isn't logged in, throw an error
+      throw new AuthenticationError("You need to be logged in!");
     },
   },
 };
