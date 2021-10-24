@@ -15,8 +15,8 @@ import { removeBookId } from "../utils/localStorage";
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(GET_ME);
-  const [deleteBook] = useMutation(REMOVE_BOOK);
-  const userData = data?.me || {};
+  const [removeBook] = useMutation(REMOVE_BOOK);
+  const userData = data?.me || [];
 
   if (!userData?.username) {
     return <h4>Users must be logged in to view this page!</h4>;
@@ -31,9 +31,10 @@ const SavedBooks = () => {
     }
 
     try {
-      const { data } = await deleteBook({
+      await removeBook({
         variables: { bookId },
       });
+
       // upon success, remove book's id from localStorage
       removeBookId(bookId);
     } catch (err) {

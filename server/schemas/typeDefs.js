@@ -3,10 +3,9 @@ const { gql } = require("apollo-server-express");
 const typeDefs = gql`
   # Defines which fields are accessible from the Book model
   type Book {
-    _id: ID
+    bookId: String
     authors: [String]
     description: String
-    bookId: String
     image: String
     link: String
     title: String
@@ -33,14 +32,14 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    saveBook(book: SavedBookInput): User
-    removeBook(bookId: String!): User
+    saveBook(input: savedBook!): User
+    removeBook(bookId: ID!): User
   }
 
-  input SavedBookInput {
+  input savedBook {
+    bookId: String
     authors: [String]
     description: String
-    bookId: String
     image: String
     link: String
     title: String
