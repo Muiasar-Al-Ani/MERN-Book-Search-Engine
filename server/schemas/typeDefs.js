@@ -11,6 +11,15 @@ const typeDefs = gql`
     link: String
     title: String
   }
+
+  # Defines which fields are accessible from the User model
+  type User {
+    _id: ID
+    username: String
+    email: String
+    bookCount: Int
+    savedBooks: [Book]
+  }
 `;
 // Exports the typeDefs
 module.exports = typeDefs;
