@@ -13,7 +13,7 @@ export const ADD_USER = gql`
   }
 `;
 
-// Create a GraphQL mutation login query to be executed by Apollo Client and
+// Creates a GraphQL mutation login query to be executed by Apollo Client and
 export const LOGIN_USER = gql`
   mutation login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -21,6 +21,25 @@ export const LOGIN_USER = gql`
       user {
         _id
         username
+      }
+    }
+  }
+`;
+
+// Creates a GraphQL mutation saveBook query to be executed by Apollo Client and adds a new book to the database
+export const SAVE_BOOK = gql`
+  mutation saveBook($book: SavedBookInput!) {
+    saveBook(book: $book) {
+      username
+      email
+      bookCount
+      savedBooks {
+        authors
+        description
+        bookId
+        image
+        link
+        title
       }
     }
   }
