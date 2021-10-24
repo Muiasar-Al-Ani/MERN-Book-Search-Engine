@@ -44,3 +44,22 @@ export const SAVE_BOOK = gql`
     }
   }
 `;
+
+// Creates a GraphQL mutation removeBook query to be executed by Apollo Client and deletes a book from the database
+export const REMOVE_BOOK = gql`
+  mutation removeBook($bookId: String!) {
+    removeBook(bookId: $bookId) {
+      username
+      email
+      bookCount
+      savedBooks {
+        authors
+        description
+        bookId
+        image
+        link
+        title
+      }
+    }
+  }
+`;
