@@ -2,6 +2,7 @@ const { AuthenticationError } = require("apollo-server-express");
 const { User } = require("../models");
 const { signToken } = require("../utils/auth");
 
+// Create the functions that fulfill the queries defined in `typeDefs.js`
 const resolvers = {
   Query: {
     // By adding context to our query, we can retrieve the logged in user without specifically searching for them
